@@ -27,9 +27,12 @@ public class CourseRetriever {
 
     private static void retrieveCourses(String authorId) {
         LOG.info("Retrieving courses for '{}'", authorId);
-        //Introduce a local var to avoid clutter
+        //Create a course retrieval service instance
         CourseRetrievalService courseRetrievalService = new CourseRetrievalService();
 
+        //Retrieve courses for the specified author
+        String coursesToStore = courseRetrievalService.getCourserFor(authorId);
+        LOG.info("Found {} courses", coursesToStore);
 
     }
 }
