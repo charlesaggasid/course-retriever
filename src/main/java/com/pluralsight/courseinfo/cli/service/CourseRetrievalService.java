@@ -12,7 +12,10 @@ public class CourseRetrievalService {
 
     //Declare a private static final field for the HttpClient instance.
     //Initialize it using the default factory method.
-    private static final HttpClient CLIENT = HttpClient.newHttpClient();
+    private static final HttpClient CLIENT = HttpClient
+            .newBuilder()
+            .followRedirects(HttpClient.Redirect.ALWAYS)
+            .build();
 
 
     //Implement method, pass in authorId
@@ -27,7 +30,12 @@ public class CourseRetrievalService {
         //Handle Exceptions
         try {
             HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body(); //return raw JSON string, return "" for now.
+            return switch (response.statusCode()) {
+                case 200 -> response.body();
+                case 404 -> "";
+                default -> throw new RuntimeException("Unexpected response code: " + response.statusCode());
+
+            }; //return raw JSON string, return "" for now.
         } catch (IOException | InterruptedException e) { //Java can catch multi exception
             throw new RuntimeException("Could not call Pluralsight API", e);
         }
