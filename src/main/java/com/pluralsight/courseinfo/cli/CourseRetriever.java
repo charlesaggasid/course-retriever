@@ -8,7 +8,12 @@ public class CourseRetriever {
             return;
         }
 
-        retrieveCourses(args[0]);
+        try {
+        retrieveCourses(args[0]); //original one line code, add try catch
+        } catch (Exception e) {
+            System.out.println("Unable to retrieve courses from database.");
+            e.printStackTrace();
+        }
 
     }
 
