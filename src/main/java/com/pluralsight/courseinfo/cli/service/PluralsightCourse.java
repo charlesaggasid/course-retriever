@@ -1,5 +1,8 @@
 package com.pluralsight.courseinfo.cli.service;
-//3.4.1
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record PluralsightCourse(String id, String title, String duration, String contentUrl, boolean isRetired) {
 
 }
