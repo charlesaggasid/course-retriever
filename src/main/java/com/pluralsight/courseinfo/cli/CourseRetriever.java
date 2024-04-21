@@ -1,8 +1,11 @@
 package com.pluralsight.courseinfo.cli;
 
 import com.pluralsight.courseinfo.cli.service.CourseRetrievalService;
+import com.pluralsight.courseinfo.cli.service.PluralsightCourse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class CourseRetriever {
 
@@ -18,6 +21,10 @@ public class CourseRetriever {
 
         try {
         retrieveCourses(args[0]); //original one line code, add try catch
+            //3.4.2
+//            PluralsightCourse course =
+//                    new PluralsightCourse("id","title", "00:54:57", "https://url", false);
+//            LOG.info("course: {}", course);
         } catch (Exception e) {
             LOG.error("Unable to retrieve courses from database.", e);
             //e.printStackTrace(); //we can delete this since logger have the throwable e
@@ -31,7 +38,7 @@ public class CourseRetriever {
         CourseRetrievalService courseRetrievalService = new CourseRetrievalService();
 
         //Retrieve courses for the specified author
-        String coursesToStore = courseRetrievalService.getCourserFor(authorId);
+        List<PluralsightCourse> coursesToStore = courseRetrievalService.getCourserFor(authorId);
         LOG.info("Found {} courses", coursesToStore);
 
     }

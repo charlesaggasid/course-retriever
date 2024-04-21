@@ -5,6 +5,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 public class CourseRetrievalService {
     //Define a constant for the base URL of the Pluralsight API. Include a placeholder %s for the authorId.
@@ -19,7 +20,7 @@ public class CourseRetrievalService {
 
 
     //Implement method, pass in authorId
-    public String getCourserFor(String authorId) {
+    public List<PluralsightCourse> getCourserFor(String authorId) {
 
         //Construct the HTTP Request
         HttpRequest request = HttpRequest
@@ -31,8 +32,8 @@ public class CourseRetrievalService {
         try {
             HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
             return switch (response.statusCode()) {
-                case 200 -> response.body();
-                case 404 -> "";
+                case 200 -> null;
+                case 404 -> List.of();
                 default -> throw new RuntimeException("Unexpected response code: " + response.statusCode());
 
             }; //return raw JSON string, return "" for now.
